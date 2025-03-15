@@ -1,0 +1,13 @@
+python .\calc_global_morans_csv.py "C:/CWL/spatial/GlobalMorans/data/OK_Summer.shp" NDVI queen output.csv
+
+docker build -t eforoutan/calc_global_morans:latest .
+docker run --rm -v C:/CWL/spatial/GlobalMorans/data:/data eforoutan/calc_global_morans:latest /data/OK_Summer.shp AvgTemp queen output.csv
+
+docker login
+docker push eforoutan/calc_global_morans
+
+wsl --set-default Ubuntu # one time
+
+wsl -d Ubuntu
+
+cwltool calc_global_morans_csv.cwl calc_global_morans_csv.yml
